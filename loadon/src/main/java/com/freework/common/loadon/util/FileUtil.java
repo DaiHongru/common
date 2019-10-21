@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 /**
  * @author daihongru
@@ -51,6 +53,54 @@ public class FileUtil {
         if (!dirPath.exists()) {
             dirPath.mkdirs();
             logger.info("创建目录：" + targetAddr);
+        }
+    }
+
+    /**
+     * 拷贝文件
+     *
+     * @param srcPath
+     * @param targetPath
+     * @throws RuntimeException
+     */
+    public static void copyFile(String srcPath, String targetPath) throws RuntimeException {
+        File srcFile = new File(PathUtil.getBasePath() + srcPath);
+        File targetFile = new File(PathUtil.getBasePath() + targetPath);
+        if (!srcFile.exists()) {
+            throw new RuntimeException("源文件不存在！");
+        }
+        if (!srcFile.isFile()) {
+            throw new RuntimeException("源文件不是文件！");
+        }
+        FileInputStream in = null;
+        FileOutputStream out = null;
+        try {
+            in = new FileInputStream(srcFile);
+            out = new FileOutputStream(targetFile);
+            byte[] buf = new byte[8 * 1024];
+            int len = 0;
+            while ((len = in.read(buf)) != -1) {
+                out.write(buf, 0, len);
+                out.flush();
+            }
+            logger.info("拷贝文件：[" + srcPath + "]到[" + targetPath + "]");
+        } catch (Exception e) {
+            throw new RuntimeException();
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e) {
+                System.out.println("关闭输入流错误！");
+            }
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (Exception e) {
+                System.out.println("关闭输出流错误！");
+            }
         }
     }
 }

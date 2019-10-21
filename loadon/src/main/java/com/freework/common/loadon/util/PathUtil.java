@@ -16,7 +16,9 @@ public class PathUtil {
 
     private final static String USER_PORTRAIT_PATH = "/image/portrait/";
 
-    private final static String CVITAE_PATH = "/document/cvitae/";
+    private final static String CVITAE_PATH = "/document/cvitae/user/";
+
+    private final static String ENTERPRISE_CVITAE_PATH = "/document/cvitae/enterprise/";
 
     public static String getBasePath() {
         String os = System.getProperty("os.name");
@@ -47,5 +49,10 @@ public class PathUtil {
     public static String getCvitaePath(Integer userId) {
         String cvitaePath = CVITAE_PATH + userId + seperator;
         return cvitaePath.replace("/", seperator);
+    }
+
+    public static String getEnterpriseCvitaePath(Integer enterpriseId, Integer userId) {
+        String enterpriseCvitaePath = ENTERPRISE_CVITAE_PATH + enterpriseId + seperator + userId + seperator;
+        return enterpriseCvitaePath.replace("/", seperator);
     }
 }
