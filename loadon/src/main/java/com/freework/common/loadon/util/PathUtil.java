@@ -51,8 +51,8 @@ public class PathUtil {
         return cvitaePath.replace("/", seperator);
     }
 
-    public static String getEnterpriseCvitaePath(Integer enterpriseId, Integer userId) {
-        String enterpriseCvitaePath = ENTERPRISE_CVITAE_PATH + enterpriseId + seperator + userId + seperator;
+    public static String getEnterpriseCvitaePath(Integer enterpriseId, Integer vocationId, Integer userId) {
+        String enterpriseCvitaePath = ENTERPRISE_CVITAE_PATH + enterpriseId + seperator + vocationId + seperator + userId + seperator;
         return enterpriseCvitaePath.replace("/", seperator);
     }
 }

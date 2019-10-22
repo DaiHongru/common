@@ -38,7 +38,7 @@ public class JsonUtil {
         try {
             str = OBJECT_MAPPER.writeValueAsString(obj);
         } catch (Exception e) {
-            logger.error(obj + "对象转成JSON异常：" + e.getMessage());
+            logger.error(obj + "JsonUtil：对象转成JSON异常：" + e.getMessage());
             throw new JsonUtilException(e.getMessage());
         }
         return str;
@@ -59,10 +59,30 @@ public class JsonUtil {
         try {
             obj = OBJECT_MAPPER.readValue(jsonString, clazz);
         } catch (Exception e) {
-            logger.error("JSON：" + jsonString + "转成" + clazz + "对象异常：" + e.getMessage());
+            logger.error("JsonUtil：" + jsonString + "转成" + clazz + "对象异常：" + e.getMessage());
             throw new JsonUtilException(e.getMessage());
         }
         return obj;
+    }
+
+    /**
+     * javaBean json数组字符串转换为列表
+     *
+     * @param jsonArrayStr
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> jsonToList(String jsonArrayStr, Class<T> clazz) {
+        JavaType javaType = getCollectionType(ArrayList.class, clazz);
+        List<T> lst = null;
+        try {
+            lst = (List<T>) OBJECT_MAPPER.readValue(jsonArrayStr, javaType);
+        } catch (Exception e) {
+            logger.error("JsonUtil：json字符串转列表异常：" + e.getMessage());
+            throw new JsonUtilException(e.getMessage());
+        }
+        return lst;
     }
 
     /**
@@ -182,22 +202,6 @@ public class JsonUtil {
         }
 
         return map;
-    }
-
-    /**
-     * 与javaBean json数组字符串转换为列表
-     *
-     * @param jsonArrayStr
-     * @param clazz
-     * @param <T>
-     * @return
-     * @throws Exception
-     */
-    public static <T> List<T> jsonToList(String jsonArrayStr, Class<T> clazz) throws Exception {
-
-        JavaType javaType = getCollectionType(ArrayList.class, clazz);
-        List<T> lst = (List<T>) OBJECT_MAPPER.readValue(jsonArrayStr, javaType);
-        return lst;
     }
 
 
