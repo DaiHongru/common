@@ -97,13 +97,7 @@ public class DesUtil {
     /**
      * 生成加密的用户名和密码
      */
-/*
-    public static void main(String[] args) {
-        System.out.println(getEncryptString(""));
-    }
-*/
-
-
-
-
+//    public static void main(String[] args) {
+//        System.out.println(getEncryptString("freework"));
+//    }
 }
